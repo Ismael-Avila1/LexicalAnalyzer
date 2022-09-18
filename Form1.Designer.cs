@@ -79,6 +79,7 @@
             this.buttonAnalyze.TabIndex = 2;
             this.buttonAnalyze.Text = "Analizar";
             this.buttonAnalyze.UseVisualStyleBackColor = false;
+            this.buttonAnalyze.Click += new System.EventHandler(this.buttonAnalyze_Click);
             // 
             // listView1
             // 
