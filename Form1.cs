@@ -17,7 +17,7 @@ namespace LexicalAnalyzer
             for(int i=0; i<textBoxInput.Lines.Length; i++)
                 strings.Add(textBoxInput.Lines[i] + "$");
 
-            for (int i = 0; i < strings.Count; i++)
+            for(int i = 0; i < strings.Count; i++)
                 analyze(strings[i]);
         }
 
@@ -47,16 +47,17 @@ namespace LexicalAnalyzer
                             token = "Pesos";
                         }
                         else if(s[i] == '=') {
-                            state = 1;
+                            state = 4;
                             lexeme += s[i];
-                            token = "Igual";
+                            token = "Asignacion";
                         }
                         else if(Char.IsDigit(s[i])) {
-                            state = 5;
+                            state = 6;
                             lexeme += s[i];
                             token = "Numero";
                         }
                         break;
+
 
                     case 1:
                         if(Char.IsDigit(s[i]) || Char.IsLetter(s[i]) || s[i] == '_') {
@@ -64,55 +65,72 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "id";
                         }
-                        else if(s[i] == '=') {
-                            state = 4;
-                            lexeme += s[i];
-                            token = "Op relacional";
-                        }
                         else
                             state = 20;
                         break;
+
 
                     case 2:
                         state = 20;
                         break;
 
+
                     case 3:
                         state = 20;
                         break;
 
+
                     case 4:
+                        if(s[i] == '=') {
+                            state = 5;
+                            lexeme += s[i];
+                            token = "opRelacional";
+                        }
+                        else 
+                            state = 20;
+                        break;
+
+
+                    case 5:
                         state = 20;
                         break;
 
-                    case 5:
-                        if(Char.IsDigit(s[i])) {
-                            state = 5;
-                            lexeme += s[i];
-                            token = "Tipo de dato";
-                        }
-                        else if(s[i] == '.') {
-                            state = 6;
-                            lexeme += s[i];
-                            token = "Tipo de dato";
-                        }
-                        else
-                            state = 20;
-                        break;
 
                     case 6:
                         if(Char.IsDigit(s[i])) {
                             state = 6;
                             lexeme += s[i];
-                            token = "Tipo de dato";
+                            token = "Numero";
+                        }
+                        else if(s[i] == '.') {
+                            state = 7;
+                            lexeme += s[i];
+                            token = "Numero";
+                        }
+                        else
+                            state = 20;
+                        break;
+
+
+                    case 7:
+                        if(Char.IsDigit(s[i])) {
+                            state = 7;
+                            lexeme += s[i];
+                            token = "Numero";
                         }
                         else 
                             state = 20;
                         break;
 
                     case 20:
-                        // Agregar el lexema encontrado y el token a la lista de elementos
                         break;
+                }
+                if(state == 20) {
+                    elements.Add(new Element(lexeme, token, 0));
+
+                    state = 0;
+                    lexeme = "";
+                    token = "";
                 }
             }
 

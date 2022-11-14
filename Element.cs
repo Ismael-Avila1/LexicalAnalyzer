@@ -8,23 +8,23 @@ namespace LexicalAnalyzer
 {
     internal class Element
     {
-        string identifier;
+        string lexeme;
         string token;
         int number;
 
         public Element() { }
         
-        public Element(string identifier, string token, int number) {
-            this.identifier = identifier;
+        public Element(string lexeme, string token, int number) {
+            this.lexeme = lexeme;
             this.token = token;
             this.number = number;
         }
 
 
-        public string Identifier
+        public string Lexeme
         {
-            get { return identifier; }
-            set { identifier = value; }
+            get { return lexeme; }
+            set { lexeme = value; }
         }
 
         public string Token
