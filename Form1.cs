@@ -3,11 +3,16 @@ namespace LexicalAnalyzer
     public partial class Form1 : Form
     {
         List<Element> elements;
+        int[,] table;
+        int[,] rules;
 
         public Form1()
         {
             InitializeComponent();
             elements = new List<Element>();
+
+            table = loadTable();
+            rules = loadRules();
         }
 
         private void buttonAnalyze_Click(object sender, EventArgs e)
@@ -22,6 +27,8 @@ namespace LexicalAnalyzer
 
             foreach(Element elem in elements)
                 listView1.Items.Add(new ListViewItem(new String[] {elem.Lexeme, elem.Token, elem.Number.ToString() }));
+
+            
         }
 
         void analyze(string s)
@@ -320,6 +327,54 @@ namespace LexicalAnalyzer
         }
 
 
+        int[,] loadTable()
+        {
+            int[,] table = new int[84,40];
+            string line, aux;
+
+            StreamReader sr = new StreamReader("../../../GR2slrTable.txt");
+
+            line = sr.ReadLine();
+
+            for(int i=0; i<84; i++) {
+                for(int j=0; j<40; j++) {
+                    if(line.IndexOf('\t') == -1)
+                        aux = line.Substring(0);
+                    else
+                        aux = line.Substring(0, line.IndexOf('\t'));
+
+                    table[i, j] = int.Parse(aux);
+                    line = line.Substring(line.IndexOf('\t')+1);
+                }
+                line = sr.ReadLine();
+            }
+
+
+            return table;
+        }
+
+        int[,] loadRules()
+        {
+            int[,] rules = new int[43,2];
+            string line, aux;
+
+            StreamReader sr = new StreamReader("../../../GR2slrRulesId.txt");
+
+            line = sr.ReadLine();
+
+            for(int i=0; i<43; i++) {
+                aux = line.Substring(0, line.IndexOf('\t'));
+                rules[i, 0] = int.Parse(aux);
+                
+                aux = line.Substring(line.IndexOf('\t') + 1);
+                rules[i, 1] = int.Parse(aux);
+
+                line = sr.ReadLine();
+            }
+
+
+            return rules;
+        }
 
     }
 }
