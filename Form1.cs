@@ -42,49 +42,49 @@ namespace LexicalAnalyzer
                             token = "Numero";
                         }
                         else if(s[i] == ';') {
-                            elements.Add(new Element(s[i].ToString(), "Punto y coma", 0));
+                            elements.Add(new Element(s[i].ToString(), "Punto y coma", 2));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == ',') {
-                            elements.Add(new Element(s[i].ToString(), "Coma", 0));
+                            elements.Add(new Element(s[i].ToString(), "Coma", 3));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == '(') {
-                            elements.Add(new Element(s[i].ToString(), "Parentesis Izq", 0));
+                            elements.Add(new Element(s[i].ToString(), "Parentesis Izq", 4));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == ')') {
-                            elements.Add(new Element(s[i].ToString(), "Parentesis Der", 0));
+                            elements.Add(new Element(s[i].ToString(), "Parentesis Der", 5));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == '{') {
-                            elements.Add(new Element(s[i].ToString(), "Llave Izq", 0));
+                            elements.Add(new Element(s[i].ToString(), "Llave Izq", 6));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == '}') {
-                            elements.Add(new Element(s[i].ToString(), "Llave Der", 0));
+                            elements.Add(new Element(s[i].ToString(), "Llave Der", 7));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == '$') {
-                            elements.Add(new Element(s[i].ToString(), "Pesos", 0));
+                            elements.Add(new Element(s[i].ToString(), "Pesos", 18));
 
                             state = 0;
                             lexeme = "";
@@ -121,14 +121,14 @@ namespace LexicalAnalyzer
                             token = "OpLogico";
                         }
                         else if(s[i] == '+' || s[i] == '-') {
-                            elements.Add(new Element(s[i].ToString(), "OpSuma", 0));
+                            elements.Add(new Element(s[i].ToString(), "OpSuma", 14));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else if(s[i] == '*' || s[i] == '/') {
-                            elements.Add(new Element(s[i].ToString(), "OpMultiplicacion", 0));
+                            elements.Add(new Element(s[i].ToString(), "OpMultiplicacion", 16));
 
                             state = 0;
                             lexeme = "";
@@ -145,7 +145,23 @@ namespace LexicalAnalyzer
                             token = "id";
                         }
                         else {
-                            elements.Add(new Element(lexeme, token, 0));
+                            if(lexeme == "int" || lexeme == "float" || lexeme == "char" || lexeme == "void")
+                                elements.Add(new Element(lexeme, token, 0));
+
+                            else if(lexeme == "if")
+                                elements.Add(new Element(lexeme, token, 9));
+
+                            else if(lexeme == "while")
+                                elements.Add(new Element(lexeme, token, 10));
+
+                            else if(lexeme == "return")
+                                elements.Add(new Element(lexeme, token, 11));
+
+                            else if(lexeme == "else")
+                                elements.Add(new Element(lexeme, token, 12));
+
+                            else
+                                elements.Add(new Element(lexeme, token, 1));
 
                             state = 0;
                             lexeme = "";
@@ -166,7 +182,7 @@ namespace LexicalAnalyzer
                             token = "Numero";
                         }
                         else {
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 13));
 
                             state = 0;
                             lexeme = "";
@@ -182,7 +198,7 @@ namespace LexicalAnalyzer
                             token = "Numero";
                         }
                         else {
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 13));
 
                             state = 0;
                             lexeme = "";
@@ -196,7 +212,7 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "OpRelacional";
 
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 17));
 
                             state = 0;
                             lexeme = "";
@@ -210,7 +226,14 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "OpRelacional";
 
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 17));
+
+                            state = 0;
+                            lexeme = "";
+                            token = "";
+                        }
+                        else {
+                            elements.Add(new Element(lexeme, token, 17));
 
                             state = 0;
                             lexeme = "";
@@ -224,7 +247,14 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "OpRelacional";
 
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 17));
+
+                            state = 0;
+                            lexeme = "";
+                            token = "";
+                        }
+                        else {
+                            elements.Add(new Element(lexeme, token, 17));
 
                             state = 0;
                             lexeme = "";
@@ -238,14 +268,14 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "OpRelacional";
 
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 17));
 
                             state = 0;
                             lexeme = "";
                             token = "";
                         }
                         else {
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 8));
 
                             state = 0;
                             lexeme = "";
@@ -259,7 +289,7 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "OpLogico";
 
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 15));
 
                             state = 0;
                             lexeme = "";
@@ -273,7 +303,7 @@ namespace LexicalAnalyzer
                             lexeme += s[i];
                             token = "OpLogico";
 
-                            elements.Add(new Element(lexeme, token, 0));
+                            elements.Add(new Element(lexeme, token, 15));
 
                             state = 0;
                             lexeme = "";
