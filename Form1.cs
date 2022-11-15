@@ -19,6 +19,9 @@ namespace LexicalAnalyzer
 
             for(int i = 0; i < strings.Count; i++)
                 analyze(strings[i]);
+
+            foreach(Element elem in elements)
+                listView1.Items.Add(new ListViewItem(new String[] {elem.Lexeme, elem.Token, elem.Number.ToString() }));
         }
 
         void analyze(string s)
@@ -146,19 +149,19 @@ namespace LexicalAnalyzer
                         }
                         else {
                             if(lexeme == "int" || lexeme == "float" || lexeme == "char" || lexeme == "void")
-                                elements.Add(new Element(lexeme, token, 0));
+                                elements.Add(new Element(lexeme, "Tipo de dato", 0));
 
                             else if(lexeme == "if")
-                                elements.Add(new Element(lexeme, token, 9));
+                                elements.Add(new Element(lexeme, "if", 9));
 
                             else if(lexeme == "while")
-                                elements.Add(new Element(lexeme, token, 10));
+                                elements.Add(new Element(lexeme, "while", 10));
 
                             else if(lexeme == "return")
-                                elements.Add(new Element(lexeme, token, 11));
+                                elements.Add(new Element(lexeme, "return", 11));
 
                             else if(lexeme == "else")
-                                elements.Add(new Element(lexeme, token, 12));
+                                elements.Add(new Element(lexeme, "else", 12));
 
                             else
                                 elements.Add(new Element(lexeme, token, 1));
