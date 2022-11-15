@@ -17,21 +17,33 @@ namespace LexicalAnalyzer
 
         private void buttonAnalyze_Click(object sender, EventArgs e)
         {
+            listView1.Items.Clear();
+            elements.Clear();
+
             List<string> strings = new List<string>();
 
             for(int i=0; i<textBoxInput.Lines.Length; i++)
                 strings.Add(textBoxInput.Lines[i] + "$");
 
             for(int i = 0; i < strings.Count; i++)
-                analyze(strings[i]);
+                lexycalAnalyzer(strings[i]);
 
             foreach(Element elem in elements)
                 listView1.Items.Add(new ListViewItem(new String[] {elem.Lexeme, elem.Token, elem.Number.ToString() }));
 
             
+            if(syntacticAnalyzer()) {
+                textBox2.Text = "La cadena ingresada es valida";
+                textBox2.ForeColor = Color.Green;
+            }
+            else {
+                textBox2.Text = "La cadena ingresada no  es valida";
+                textBox2.ForeColor = Color.Red;
+            }
+            
         }
 
-        void analyze(string s)
+        void lexycalAnalyzer(string s)
         {
             int state = 0;
             string lexeme = "", token = "error";
@@ -325,6 +337,52 @@ namespace LexicalAnalyzer
             }
             
         }
+
+        bool syntacticAnalyzer()
+        {
+            Stack<int> stack = new Stack<int>();
+            stack.Push(0);
+
+            int idElement = 0, action, rule, pops, row, column;
+
+            bool isValid = false;
+
+            while(idElement < elements.Count) {
+                action = table[stack.Peek(), elements[idElement].Number];
+
+                if(action == -1) {
+                    isValid = true;
+                    break;
+                }
+                else if(action == 0) {
+                    isValid = false;
+                    break;
+                }
+                else if(action > 0) {
+                    stack.Push(elements[idElement].Number);
+                    stack.Push(action);
+                    idElement++;
+                }
+                else if(action < -1) {
+                    rule = (action + 1) * -1;
+                    pops = rules[rule, 1];
+
+                    for(int i = 0; i < pops * 2; i++)
+                        stack.Pop();
+
+                    row = stack.Peek();
+                    column = rules[rule, 0];
+
+                    stack.Push(column);
+                    stack.Push(table[row, column]);
+                }
+
+
+            }
+
+            return isValid;
+        }
+
 
 
         int[,] loadTable()
